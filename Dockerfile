@@ -28,6 +28,6 @@ RUN chmod +x /usr/bin/lantern_linux_amd64
 
 #加入启动脚本
 ADD startup.sh /usr/bin/startup.sh
-chmod +x /usr/bin/startup.sh
+RUN chmod +x /usr/bin/startup.sh
 
 ENTRYPOINT ["/usr/bin/startup.sh"]
