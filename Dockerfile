@@ -7,7 +7,7 @@ ENV SSPASSWD=sspassword
 EXPOSE 22
 EXPOSE $SSPORT
 
-RUN yum update
+RUN yum update -y
 
 #°²×°openssh-server
 RUN yum install -y openssh-server
