@@ -1,8 +1,8 @@
 FROM centos:7
 MAINTAINER zhaxg <zhaxg@qq.com>
 
-ENV SS_PASS
-ENV ROOT_PASS 
+ENV SS_PASS docker
+ENV ROOT_PASS docker
  
 EXPOSE 8388
 EXPOSE 8787
@@ -14,7 +14,7 @@ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-
   
 #install openssh-server ------------------------------------------------------
 RUN yum install -y openssh-server
-RUN mkdir -p /var/run/sshd && echo "root:docker" | chpasswd 
+RUN mkdir -p /var/run/sshd && echo "root:$ROOT_PASS" | chpasswd 
 RUN /usr/sbin/sshd-keygen
 RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
 RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
