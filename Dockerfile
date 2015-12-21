@@ -24,5 +24,5 @@ RUN chmod +x /usr/bin/lantern_linux_amd64
 #install startup ---------------------------------------------------------
 ADD startup.sh /usr/bin/startup.sh
 RUN chmod +x /usr/bin/startup.sh 
-
+ 
 ENTRYPOINT ["/usr/bin/startup.sh"]
