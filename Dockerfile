@@ -4,9 +4,17 @@ MAINTAINER zhaxg <zhaxg@qq.com>
 ENV SSPORT=8388
 ENV SSPASSWD=sspassword
 
+EXPOSE 22
 EXPOSE $SSPORT
 
-RUN echo "root:docker" | chpasswd 
+RUN yum update
+
+#安装openssh-server
+RUN yum install -y openssh-server
+RUN mkdir /var/run/sshd 
+RUN sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+CMD ["/usr/sbin/sshd", "-D"] 
 
 #安装shadowsocks
 RUN yum install -y python-setuptools && easy_install pip
@@ -30,4 +38,5 @@ RUN chmod +x /usr/bin/lantern_linux_amd64
 ADD startup.sh /usr/bin/startup.sh
 RUN chmod +x /usr/bin/startup.sh
 
+RUN echo "root:docker" | chpasswd 
 ENTRYPOINT ["/usr/bin/startup.sh"]
