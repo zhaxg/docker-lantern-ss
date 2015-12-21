@@ -25,8 +25,8 @@ RUN yum install -y wget
 RUN wget https://github.com/kendou/lantern/raw/master/lantern_linux_amd64 -O /usr/bin/lantern_linux_amd64
 RUN chmod +x /usr/bin/lantern_linux_amd64 
 
-RUN sed -i '$a exec proxychains ssserver -p 8388 -k $SS_PASS -d start' /run.sh
-RUN sed -i '$a exec lantern_linux_amd64 --addr 0.0.0.0:8787' /run.sh
-
+#RUN sed -i '$a exec proxychains ssserver -p 8388 -k $SS_PASS -d start' /run.sh
+#RUN sed -i '$a exec lantern_linux_amd64 --addr 0.0.0.0:8787' /run.sh
 #ENTRYPOINT /run.sh
+
 CMD lantern_linux_amd64 --addr 0.0.0.0:8787 && proxychains ssserver -p 8388 -k $SS_PASS -d start
