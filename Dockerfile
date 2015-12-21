@@ -1,10 +1,23 @@
-FROM index.tenxcloud.com/tenxcloud/centos:latest
+FROM centos:7
 MAINTAINER zhaxg <zhaxg@qq.com>
- 
-ENV SSPASSWD=sspassword
+
+ENV SS_PASS
+ENV ROOT_PASS 
  
 EXPOSE 8388
 EXPOSE 8787
+
+RUN yum install -y wget
+RUN yum install -y deltarpm epel-release
+ 
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+  
+#install openssh-server ------------------------------------------------------
+RUN yum install -y openssh-server
+RUN mkdir -p /var/run/sshd && echo "root:docker" | chpasswd 
+RUN /usr/sbin/sshd-keygen
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
 
 #install shadowsocks ------------------------------------------------------
 RUN yum install -y python-setuptools && easy_install pip
@@ -17,7 +30,6 @@ RUN cd /tmp/proxychains-ng && ./configure --prefix=/usr --sysconfdir=/etc && mak
 ADD proxychains.conf /etc/proxychains.conf
 
 #install lantern_linux_amd64 ----------------------------------------------
-RUN yum install -y wget
 RUN wget https://github.com/kendou/lantern/raw/master/lantern_linux_amd64 -O /usr/bin/lantern_linux_amd64
 RUN chmod +x /usr/bin/lantern_linux_amd64 
 
