@@ -1,4 +1,4 @@
-FROM centos:7
+FROM index.tenxcloud.com/tenxcloud/centos:latest
 MAINTAINER zhaxg <zhaxg@qq.com>
 
 ENV SSPORT=8388
