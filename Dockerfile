@@ -3,7 +3,6 @@ MAINTAINER zhaxg <zhaxg@qq.com>
 
 ENV SS_PASS docker
 ENV ROOT_PASS docker
-ENV AUTHORIZED_KEYS **None**
 
 EXPOSE 22
 EXPOSE 8388
