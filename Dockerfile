@@ -10,7 +10,7 @@ EXPOSE 8787
 RUN yum install -y wget
 RUN yum install -y deltarpm epel-release
  
-wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+RUN wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
   
 #install openssh-server ------------------------------------------------------
 RUN yum install -y openssh-server
