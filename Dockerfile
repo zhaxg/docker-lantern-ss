@@ -31,8 +31,6 @@ RUN yum install -y wget
 RUN wget https://github.com/kendou/lantern/raw/master/lantern_linux_amd64 -O /usr/bin/lantern_linux_amd64
 RUN chmod +x /usr/bin/lantern_linux_amd64 
 
-CMD lantern_linux_amd64 --addr 0.0.0.0:8787 && proxychains ssserver -p 8388 -k $SS_PASS -d start
-
 EXPOSE 22
 EXPOSE 8388
 EXPOSE 8787
