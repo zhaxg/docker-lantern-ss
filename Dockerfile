@@ -8,15 +8,12 @@ EXPOSE 8787
 
 #install shadowsocks ------------------------------------------------------
 RUN yum install -y python-setuptools && easy_install pip
-RUN pip install shadowsocks
-ADD shadowsocks.json /etc/
+RUN pip install shadowsocks 
 
 #install proxychains-ng ---------------------------------------------------
 RUN yum install -y git gcc make
 RUN cd /tmp && git clone --depth=1 https://github.com/rofl0r/proxychains-ng.git
-WORKDIR /tmp/proxychains-ng
-RUN ./configure --prefix=/usr --sysconfdir=/etc && make install && make install-config
-WORKDIR /
+RUN cd /tmp/proxychains-ng && ./configure --prefix=/usr --sysconfdir=/etc && make && make install && make install-config
 ADD proxychains.conf /etc/proxychains.conf
 
 #install lantern_linux_amd64 ----------------------------------------------
