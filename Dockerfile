@@ -11,21 +11,16 @@ EXPOSE 8787
 #yum install Package
 RUN yum -y install openssh-server
 RUN yum -y install python-setuptools && easy_install pip
-RUN easy_install supervisor
 
 #set sshd------------------------------------------------------
-RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
-RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
-RUN ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ""
-RUN sed -ri 's/session    required     pam_loginuid.so/#session    required     pam_loginuid.so/g' /etc/pam.d/sshd
-RUN mkdir -p /root/.ssh && chown root.root /root && chmod 700 /root/.ssh
-RUN echo 'root:$ROOT_PASS' | chpasswd
+RUN mkdir /var/run/sshd
+RUN echo 'root:$ROOT_PASS' |chpasswd
  
 #install shadowsocks ------------------------------------------------------ 
 RUN pip install shadowsocks 
 
 #install supervisor------------------------------
-RUN pip install --no-deps --ignore-installed --pre supervisor 
+RUN easy_install supervisor
 RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisord.conf
 
