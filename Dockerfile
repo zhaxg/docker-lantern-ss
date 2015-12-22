@@ -15,12 +15,12 @@ RUN echo 'root:docker' | chpasswd
  
 #set supervisor
 RUN mkdir -p /var/log/supervisor
-ADD /etc/supervisord.conf /etc/supervisord.conf
+COPY ./etc/supervisord.conf /etc/supervisord.conf
  
 #-----------------------------------------------------------
 RUN yum install -y bind-utils 
 RUN rpm -ivh ftp://fr2.rpmfind.net/linux/sourceforge/m/ma/magicspecs/apt/3.0/x86_64/RPMS.p/proxychains-3.1-17mgc30.x86_64.rpm
-ADD /etc/proxychains.conf /etc/proxychains.conf
+COPY ./etc/proxychains.conf /etc/proxychains.conf
 
 RUN yum install -y wget
 RUN wget https://github.com/kendou/lantern/raw/master/lantern_linux_amd64 -O /usr/bin/lantern 
