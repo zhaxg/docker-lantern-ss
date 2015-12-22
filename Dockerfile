@@ -1,4 +1,4 @@
-FROM centos:7
+FROM daocloud.io/centos:7
 MAINTAINER zhaxg <zhaxg@qq.com>
 
 ENV SS_PASS docker
