@@ -24,7 +24,8 @@ RUN yum install -y wget
 RUN wget https://github.com/kendou/lantern/raw/master/lantern_linux_amd64 -O /usr/bin/lantern 
 RUN chmod +x /usr/bin/lantern
 
-ADD etc /etc
+ADD zzproxychains.conf /etc/proxychains.conf
+ADD zzsupervisord.conf /etc/supervisord.conf
 #-----------------------------------------------------------
 
 #set port
