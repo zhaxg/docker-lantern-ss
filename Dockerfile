@@ -15,16 +15,16 @@ RUN echo 'root:docker' | chpasswd
  
 #set supervisor
 RUN mkdir -p /var/log/supervisor
-COPY /files/supervisord.conf /etc/
  
 #-----------------------------------------------------------
 RUN yum install -y bind-utils 
 RUN rpm -ivh ftp://fr2.rpmfind.net/linux/sourceforge/m/ma/magicspecs/apt/3.0/x86_64/RPMS.p/proxychains-3.1-17mgc30.x86_64.rpm
-COPY /files/proxychains.conf /etc/ 
 
 RUN yum install -y wget
 RUN wget https://github.com/kendou/lantern/raw/master/lantern_linux_amd64 -O /usr/bin/lantern 
 RUN chmod +x /usr/bin/lantern
+
+ADD etc /
 #-----------------------------------------------------------
 
 #set port
