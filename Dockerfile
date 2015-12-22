@@ -1,33 +1,36 @@
-FROM centos:centos7
-MAINTAINER zhaxg <zhaxg@qq.com>
-#-----------------------------------------------------------
-ADD install /tmp
-#-----------------------------------------------------------
+FROM centos:latest
+MAINTAINER zhaxg<zhaxg@qq.com>
+ 
+#yum install Package
 RUN yum -y install openssh-server
-RUN yum -y install python-setuptools && easy_install pip && pip install shadowsocks 
-#-----------------------------------------------------------
-RUN mkdir /var/run/sshd
-RUN sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+RUN yum -y install python-setuptools && easy_install supervisor && easy_install pip && pip install shadowsocks 
+
+#set sshd
+RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
+RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
+RUN ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ""
+RUN sed -ri 's/session    required     pam_loginuid.so/#session    required     pam_loginuid.so/g' /etc/pam.d/sshd
+RUN mkdir -p /root/.ssh && chown root.root /root && chmod 700 /root/.ssh
 RUN echo 'root:docker' | chpasswd
+ 
+#set supervisor
+RUN mkdir -p /var/log/supervisor
+ADD /etc/supervisord.conf /etc/supervisord.conf
+ 
 #-----------------------------------------------------------
 RUN yum install -y bind-utils 
-RUN rpm -ivh /tmp/proxychains-3.1-17mgc30.x86_64.rpm
-RUN sed -i 'N;$!P;D' /etc/proxychains.conf
-RUN sed -i '$a http 127.0.0.1 8787' /etc/proxychains.conf 
-#-----------------------------------------------------------
-RUN cp -f /tmp/lantern_linux_amd64 /usr/bin/lantern 
+RUN rpm -ivh ftp://fr2.rpmfind.net/linux/sourceforge/m/ma/magicspecs/apt/3.0/x86_64/RPMS.p/proxychains-3.1-17mgc30.x86_64.rpm
+ADD /etc/proxychains.conf /etc/proxychains.conf
+
+RUN yum install -y wget
+RUN wget https://github.com/kendou/lantern/raw/master/lantern_linux_amd64 -O /usr/bin/lantern 
 RUN chmod +x /usr/bin/lantern
 #-----------------------------------------------------------
-RUN easy_install supervisor  
-RUN mkdir -p /var/log/supervisor
-ADD supervisord.conf /etc/supervisord.conf
-#-----------------------------------------------------------
-RUN rm -f /tmp/*.*
-#-----------------------------------------------------------
+
+#set port
 EXPOSE 22
 EXPOSE 8388
 EXPOSE 8787
-
-ENTRYPOINT ["/usr/bin/supervisord -c /etc/supervisord.conf"] 
-
+  
+#run supervisor
+CMD ["/usr/bin/supervisord -c /etc/supervisord.conf"]
