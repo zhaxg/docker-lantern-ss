@@ -1,4 +1,4 @@
-FROM daocloud.io/zhaxg/centos-supervisor
+FROM million12/centos-supervisor
 MAINTAINER zhaxg <zhaxg@qq.com>
 
 ENV SS_PASS docker
