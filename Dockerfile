@@ -34,4 +34,4 @@ EXPOSE 8388
 EXPOSE 8787
   
 #run supervisor
-CMD ["/usr/bin/supervisord -c /etc/supervisord.conf"]
+CMD ["/usr/bin/supervisord"]
