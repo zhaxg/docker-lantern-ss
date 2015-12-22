@@ -28,5 +28,7 @@ RUN rm -f /tmp/*.*
 EXPOSE 22
 EXPOSE 8388
 EXPOSE 8787
+
+ENTRYPOINT ["/bin/sh -c"]
 CMD ["/usr/bin/supervisord -c /etc/supervisord.conf"]  
 
