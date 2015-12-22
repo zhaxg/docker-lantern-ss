@@ -32,7 +32,7 @@ ADD supervisord.conf /etc/supervisord.conf
 
 #install proxychains --------------------------------------------------- 
 RUN yum install -y bind-utils
-RUN rpm -ivh http://tqmes.coding.io/upload/RPMS.p/proxychains-3.1-17mgc30.x86_64.rpm
+RUN rpm -ivh http://tqmes.coding.io/upload/proxychains-3.1-17mgc30.x86_64.rpm
 #RUN rpm -ivh ftp://195.220.108.108/linux/sourceforge/m/ma/magicspecs/apt/3.0/x86_64/RPMS.p/proxychains-3.1-17mgc30.x86_64.rpm
 RUN sed -i 'N;$!P;D' /etc/proxychains.conf
 RUN sed -i '$a http 127.0.0.1 8787' /etc/proxychains.conf
