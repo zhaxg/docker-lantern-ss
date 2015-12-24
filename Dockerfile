@@ -18,7 +18,7 @@ RUN mkdir -p /var/log/supervisor
  
 #-----------------------------------------------------------
 RUN yum install -y bind-utils 
-RUN rpm -ivh ftp://fr2.rpmfind.net/linux/sourceforge/m/ma/magicspecs/apt/3.0/x86_64/RPMS.p/proxychains-3.1-17mgc30.x86_64.rpm
+RUN rpm -ivh ftp://195.220.108.108/linux/fedora/linux/releases/23/Everything/x86_64/os/Packages/p/proxychains-ng-4.10-2.fc23.x86_64.rpm
 
 RUN yum install -y wget
 RUN wget https://github.com/kendou/lantern/raw/master/lantern_linux_amd64 -O /usr/bin/lantern 
